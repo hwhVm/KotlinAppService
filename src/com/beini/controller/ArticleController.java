@@ -28,7 +28,7 @@ public class ArticleController {
     public void getArticleList(@RequestBody GetArticleRequest getArticleRequest, HttpServletResponse response, PrintWriter out) {
         List<Article> lists = userService.getArticles();
         BaseResponseJson responseJson = new BaseResponseJson();
-
+        BLog.d(" 00000000000000000");
         if (lists != null && lists.size() > 0) {
             responseJson.setReturnCode(0);
             responseJson.setReturnMessage(new Gson().toJson(lists));
@@ -36,6 +36,18 @@ public class ArticleController {
             responseJson.setReturnCode(1);
             responseJson.setReturnMessage("error");
         }
+        response.setContentType("text/htm;charset=utf-8");
+        response.setHeader("pragma", " no-cache");
+        response.setHeader("cache-control", "no-cache");
+        BLog.d("    " + responseJson.toString());
+        out.write(new Gson().toJson(responseJson));
+    }
+
+    @RequestMapping("test")
+    public void testRequest(HttpServletResponse response, PrintWriter out) {
+        BLog.d(" ------------->test");
+        BaseResponseJson responseJson = new BaseResponseJson();
+        responseJson.setReturnCode(0);
         response.setContentType("text/htm;charset=utf-8");
         response.setHeader("pragma", " no-cache");
         response.setHeader("cache-control", "no-cache");
