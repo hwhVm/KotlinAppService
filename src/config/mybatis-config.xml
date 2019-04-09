@@ -6,6 +6,7 @@
     <!-- 实体类,简称 -设置别名 -->
     <typeAliases>
         <typeAlias alias="Leader" type="com.beini.bean.Article"/>
+        <typeAlias type="com.beini.bean.UserInfo"/>
     </typeAliases>
 
     <!-- 实体接口映射资源 -->

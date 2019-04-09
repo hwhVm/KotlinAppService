@@ -3,7 +3,7 @@ package com.beini.bean;
 /**
  * Created by beini on 2017/7/8.
  */
-public class Article {
+public class Article extends  BaseBean{
     private int id;
     private String title;
     private String picUrl;
