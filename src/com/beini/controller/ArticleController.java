@@ -22,13 +22,13 @@ import java.util.List;
  * Created by beini on 2017/7/8.
  */
 @Controller
-public class ArticleController  extends BaseController{
+public class ArticleController extends BaseController {
 
     @Autowired
     private ArticleService userService;
 
     @RequestMapping("getArticleList")
-//    @RequestBody GetArticleRequest getArticleRequest,
+//  @RequestBody GetArticleRequest getArticleRequest,
     public void getArticleList(HttpServletResponse response, PrintWriter out) {
 
         BLog.d(" ------------->getArticleList");
@@ -41,40 +41,7 @@ public class ArticleController  extends BaseController{
             responseJson.setReturnCode(1);
             responseJson.setReturnMessage("error");
         }
-        response.setContentType("text/htm;charset=utf-8");
-        response.setHeader("pragma", " no-cache");
-        response.setHeader("cache-control", "no-cache");
-        BLog.d("    " + responseJson.toString());
-        out.write(new Gson().toJson(responseJson));
-    }
-
-    @RequestMapping("test")
-    public void testRequest(HttpServletResponse response, PrintWriter out) {
-        BLog.d(" ------------->test");
-        BaseResponseJson responseJson = new BaseResponseJson();
-        responseJson.setReturnCode(0);
-        response.setContentType("text/htm;charset=utf-8");
-        response.setHeader("pragma", " no-cache");
-        response.setHeader("cache-control", "no-cache");
-        out.write(new Gson().toJson(responseJson));
-    }
-
-    int i = 0;
-
-    /**
-     * timer
-     * 开个定时器，定时接受APP发送过来的请求
-     */
-    @RequestMapping("timer")
-    public void getInfoFromApp(HttpServletResponse response, PrintWriter out) {
-        BLog.d(" ------------->i=" + i);
-        i++;
-//        BaseResponseJson responseJson = new BaseResponseJson();
-//        responseJson.setReturnCode(0);
-//        response.setContentType("text/htm;charset=utf-8");
-//        response.setHeader("pragma", " no-cache");
-//        response.setHeader("cache-control", "no-cache");
-//        out.write(new Gson().toJson(responseJson));
+        setResponse(responseJson, response, out);
     }
 
 
