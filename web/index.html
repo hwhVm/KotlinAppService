@@ -1,0 +1,93 @@
+<html>
+<head>
+    <title>来了老弟</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+
+    <style type="text/css">
+        .divForm {
+            position: absolute; /*绝对定位*/
+            width: 300px;
+            height: 200px;
+
+            border: 1px solid red;
+            text-align: center; /*(让div中的内容居中)*/
+            top: 50%;
+            left: 50%;
+            margin-top: -200px;
+            margin-left: -150px;
+        }
+    </style>
+
+
+    <script type="application/javascript" src="/js/jquery-3.1.1.min.js">
+    </script>
+
+
+    <script type="text/javascript">
+
+        function login() {
+
+            var parmValue = getJsonData();
+            console.log("parmValue="+parmValue)
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                contentType: 'application/json',
+                url: "login",//url
+                data: JSON.stringify(parmValue),
+                success: function (result) {
+                    var jsonResult = JSON.parse(result);
+
+                    if (jsonResult.hasOwnProperty("ReturnCode")) {
+                        var code = jsonResult.ReturnCode;
+                        if (code == 0) {
+                            alert("登录成功");
+                        } else {
+                            alert("登录失败");
+                        }
+
+                    } else {
+                        alert("  nothing")
+                    }
+
+
+                }
+            });
+        }
+
+        function getJsonData() {
+            var username = $('#username').val();
+            var password = $('#passwordId').val();
+
+
+            var json = {
+                "username": username,
+                "password": password,
+            };
+            return json;
+        }
+    </script>
+
+
+</head>
+<body>
+
+<div class="divForm">
+
+    <form id="form1" method="post">
+        <p>
+            账号:<input id="username" type="text"/>
+        <p>
+            密码:<input id="passwordId" type="password"/>
+        <p>
+            <input type="submit" value="登录" onclick="login()"/>
+
+
+    </form>
+
+</div>
+
+
+</body>
+</html>

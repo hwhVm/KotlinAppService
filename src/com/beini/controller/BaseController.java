@@ -1,6 +1,7 @@
 package com.beini.controller;
 
 import com.beini.http.BaseResponseJson;
+import com.beini.util.BLog;
 import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,8 +14,9 @@ public class BaseController {
         response.setContentType("text/htm;charset=utf-8");
         response.setHeader("pragma", " no-cache");
         response.setHeader("cache-control", "no-cache");
-
-        out.write(new Gson().toJson(responseJson));
+        String str = new Gson().toJson(responseJson);
+        BLog.d("   str=" + str);
+        out.write(str);
     }
 
 }
