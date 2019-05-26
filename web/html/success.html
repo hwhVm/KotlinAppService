@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="application/javascript" src="../js/jquery-3.1.1.min.js">
+    </script>
+    <script>
+        function startTime() {
+            var json = {
+                "time": "11111111",
+            };
+
+
+
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                contentType: 'application/json',
+                url: "../polling",//url
+                data: JSON.stringify(json),
+                success: function (result) {
+                    alert("result ")
+
+                }
+            });
+
+
+        }
+
+
+    </script>
+
+
+</head>
+<body>
+
+<h1>登录成功</h1>
+
+<button onclick="startTime()"> 执行后台轮询操作</button>
+
+
+</body>
+</html>

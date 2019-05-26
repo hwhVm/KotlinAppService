@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -33,12 +35,44 @@ public class UserController extends BaseController {
      * @param out
      */
     @RequestMapping(value = "login", method = {RequestMethod.POST})
-    public void login(@RequestBody UserInfo userInfo, HttpServletResponse response, PrintWriter out) {
+    public void login(@RequestBody UserInfo userInfo, HttpServletResponse response, HttpServletRequest request, PrintWriter out) {
 
         BLog.d(" ------------->login" + userInfo.toString());
-
         BaseResponseJson responseJson = new BaseResponseJson();
-        List<UserInfo> userInfoList = userService.login(userInfo.getUsername(), userInfo.getPassword());
+
+        //判断用户的登录信息是否完整
+        String userName = userInfo.getUsername();
+        String password = userInfo.getPassword();
+
+        if (userName == null || userName.isEmpty()) {
+            responseJson.setReturnCode(1);
+            setResponse(responseJson, response, out);
+            return;
+        }
+
+        if (password == null || password.isEmpty()) {
+            responseJson.setReturnCode(1);
+            setResponse(responseJson, response, out);
+            return;
+        }
+
+
+//        判断用户是否登录
+        HttpSession session = request.getSession();
+
+        String userNameSession = (String) session.getAttribute("userName");
+
+        BLog.d("  userNameSession= "+userNameSession);
+        if (userNameSession != null && userNameSession.equals(userName)) {//用户已经登录
+            BLog.d("  用户已经登录 ");
+            responseJson.setReturnCode(3);
+            setResponse(responseJson, response, out);
+            return;
+        }
+
+        session.setAttribute("userName", userName);
+
+        List<UserInfo> userInfoList = userService.login(userName, password);
         BLog.d("userInfoList.size()=" + userInfoList.size());
         if (userInfoList != null && userInfoList.size() > 0) {
             responseJson.setReturnCode(0);
