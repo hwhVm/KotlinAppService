@@ -72,11 +72,10 @@
                 contentType: 'application/json',
                 url: "../userList",//url
                 success: function (result) {
-                    var jsonResult = JSON.parse(result);
-                    alert(jsonResult)
-                    // jsonResult.each(function () {
-                    //     alert($(this).text())
-                    // })
+                    alert(result)
+                    $(JSON.parse(result).userListInfoList).each(function (index, item) {
+                        $('ol').append('<li>'+item.username+'</li>');
+                    })
                 }
             });
 
@@ -86,37 +85,20 @@
 
 
 </head>
-<body onload="initUserInfo();">
+<body onload="initUserInfo();" style="text-align: center">
 
 <h1 style="text-align: center" id="h1_useranme"></h1>
 
 <div>
 
-    <a id="a_user_list" href="" onclick="getUserInfoList()">用户列表</a>
+    <button id="a_user_list" href="" onclick="getUserInfoList()">用户列表</button>
 
 
 </div>
+<h3>用户列表：</h3>
 
-<div class="list_con">
-    <h2>添加、删除、排序</h2>
-    <input type="text" name="" id="text1" class="inputtext">
-    <input type="button" name="" value="增加" id="btn1" class="inputbtn">
+<ol>
 
-    <ul id="list" class="list">
-        <li><span>你今天好不好</span><a href="#" class="up">↑</a><a href="#" class="down">↓</a><a href="#" class="del">删除</a>
-        </li>
-        <li>
-            <span>学习,学习,学习</span><a href="#" class="up">↑</a><a href="#" class="down">↓</a><a href="#"
-                                                                                              class="del">删除</a>
-        </li>
-        <li class="third"><span>走到她身边去</span><a href="#" class="up">↑</a><a href="#" class="down">↓</a><a href="#"
-                                                                                                          class="del">删除</a>
-        </li>
-
-    </ul>
-
-
-</div>
-
+</ol>
 </body>
 </html>
