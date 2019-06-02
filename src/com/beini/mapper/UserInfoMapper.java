@@ -1,6 +1,7 @@
 package com.beini.mapper;
 
 import com.beini.bean.UserInfo;
+import com.beini.bean.UserListInfo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -14,6 +15,10 @@ public interface UserInfoMapper {
 
     @Insert("insert into userInfo(username,password) values(#{username},#{password});")
     int register(UserInfo userInfo);
+
+
+    @Select("select * from UserInfo")
+    List<UserListInfo> getUserList();
 
 
 }

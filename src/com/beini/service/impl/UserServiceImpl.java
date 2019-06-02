@@ -2,6 +2,7 @@ package com.beini.service.impl;
 
 import com.beini.bean.Article;
 import com.beini.bean.UserInfo;
+import com.beini.bean.UserListInfo;
 import com.beini.mapper.ArticleMapper;
 import com.beini.mapper.UserInfoMapper;
 import com.beini.service.UserService;
@@ -27,6 +28,13 @@ public class UserServiceImpl implements UserService {
     public int register(UserInfo userInfo) {
         return userInfoMapper.register(userInfo);
     }
+
+    @Override
+    public List<UserListInfo> getUserList() {
+        return userInfoMapper.getUserList();
+    }
+
+
 
 
 }

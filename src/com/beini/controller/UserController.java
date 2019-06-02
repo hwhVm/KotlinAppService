@@ -2,7 +2,10 @@ package com.beini.controller;
 
 
 import com.beini.bean.UserInfo;
+import com.beini.bean.UserListInfo;
 import com.beini.http.BaseResponseJson;
+import com.beini.http.UserListResponse;
+import com.beini.http.UserResponse;
 import com.beini.mapper.UserInfoMapper;
 import com.beini.service.UserService;
 import com.beini.service.impl.UserServiceImpl;
@@ -38,20 +41,20 @@ public class UserController extends BaseController {
     public void login(@RequestBody UserInfo userInfo, HttpServletResponse response, HttpServletRequest request, PrintWriter out) {
 
         BLog.d(" ------------->login" + userInfo.toString());
-        BaseResponseJson responseJson = new BaseResponseJson();
+        UserResponse responseJson = new UserResponse();
 
         //判断用户的登录信息是否完整
         String userName = userInfo.getUsername();
         String password = userInfo.getPassword();
 
         if (userName == null || userName.isEmpty()) {
-            responseJson.setReturnCode(1);
+            responseJson.setReturnCode(0);
             setResponse(responseJson, response, out);
             return;
         }
 
         if (password == null || password.isEmpty()) {
-            responseJson.setReturnCode(1);
+            responseJson.setReturnCode(0);
             setResponse(responseJson, response, out);
             return;
         }
@@ -59,32 +62,40 @@ public class UserController extends BaseController {
 
 //        判断用户是否登录
         HttpSession session = request.getSession();
+        UserInfo userinfo = (UserInfo) session.getAttribute("userinfo");
 
-        String userNameSession = (String) session.getAttribute("userName");
-
-        BLog.d("  userNameSession= "+userNameSession);
-        if (userNameSession != null && userNameSession.equals(userName)) {//用户已经登录
+        if (userinfo != null && userinfo.getUsername().equals(userName)) {//用户已经登录
             BLog.d("  用户已经登录 ");
             responseJson.setReturnCode(3);
+            responseJson.setUserInfo(userinfo);
             setResponse(responseJson, response, out);
             return;
         }
 
-        session.setAttribute("userName", userName);
 
         List<UserInfo> userInfoList = userService.login(userName, password);
         BLog.d("userInfoList.size()=" + userInfoList.size());
+
         if (userInfoList != null && userInfoList.size() > 0) {
-            responseJson.setReturnCode(0);
-        } else {
+            responseJson.setUserInfo(userInfoList.get(0));
+            session.setAttribute("userinfo", userInfoList.get(0));
             responseJson.setReturnCode(1);
+
+        } else {
+            responseJson.setReturnCode(0);
         }
 
         setResponse(responseJson, response, out);
 
     }
 
-
+    /**
+     * 用户注册
+     *
+     * @param userInfo
+     * @param response
+     * @param out
+     */
     @RequestMapping(value = "register", method = {RequestMethod.POST})
     public void register(@RequestBody UserInfo userInfo, HttpServletResponse response, PrintWriter out) {
         BLog.d(" ------------->Register" + userInfo.toString());
@@ -92,10 +103,33 @@ public class UserController extends BaseController {
         int numRow = userService.register(userInfo);
         BLog.d("numRow=" + numRow);
         BaseResponseJson baseResponseJson = new BaseResponseJson();
-        baseResponseJson.setReturnCode(0);
+        baseResponseJson.setReturnCode(1);
         setResponse(baseResponseJson, response, out);
 
     }
 
+    @RequestMapping(value = "userList", method = {RequestMethod.POST})
+    public void userList(HttpServletResponse response, HttpServletRequest request, PrintWriter out) {
 
+        BLog.d(" ------------->userList");
+
+        HttpSession session = request.getSession();
+
+        UserListResponse baseResponseJson = new UserListResponse();
+
+        UserInfo userinfo = (UserInfo) session.getAttribute("userinfo");
+
+        if (userinfo == null) {
+            baseResponseJson.setReturnCode(0);
+            setResponse(baseResponseJson, response, out);
+            return;
+        }
+        List<UserListInfo> userListInfoList = userService.getUserList();
+
+        //判断是否是管理员
+        baseResponseJson.setUserListInfoList(userListInfoList);
+        baseResponseJson.setReturnCode(1);
+        setResponse(baseResponseJson, response, out);
+
+    }
 }

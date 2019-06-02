@@ -1,7 +1,7 @@
 package com.beini.bean;
 
 
-public class UserInfo extends  BaseBean{
+public class UserInfo extends BaseBean {
 
 
     private long mId;
@@ -13,6 +13,9 @@ public class UserInfo extends  BaseBean{
     private String imei;
 
     private String username;
+
+    private int isAdmin;
+
 
     public String getUsername() {
         return username;
@@ -31,9 +34,7 @@ public class UserInfo extends  BaseBean{
     }
 
 
-
     private String password;
-
 
 
     public long getmId() {
@@ -74,6 +75,14 @@ public class UserInfo extends  BaseBean{
 
     public void setMId(long mId) {
         this.mId = mId;
+    }
+
+    public int isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(int admin) {
+        isAdmin = admin;
     }
 
     @Override

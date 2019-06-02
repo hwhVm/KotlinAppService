@@ -5,11 +5,12 @@ package com.beini.http;
  */
 public class BaseResponseJson {
     /**
-     * ReturnCode : 0
+     * ReturnCode : 0:失败，1：成功
      * ReturnMessage :
      */
 
     private int ReturnCode;
+
     private String ReturnMessage;
 
     public int getReturnCode() {

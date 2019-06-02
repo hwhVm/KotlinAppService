@@ -41,12 +41,12 @@ public class TimerController extends BaseController {
     }
 
 
-    @Scheduled(cron = "0/5 * * * * ? ") // 间隔5秒执行
-    public void taskCycle() {
-
-
-
-    }
+//    @Scheduled(cron = "0/5 * * * * ? ") // 间隔5秒执行
+//    public void taskCycle() {
+//        BLog.d("  taskCycle  ");
+//
+//
+//    }
 
 
 }

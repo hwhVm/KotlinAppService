@@ -44,15 +44,26 @@
                 success: function (result) {
 
                     var jsonResult = JSON.parse(result);
+                    console.log("     success  ")
+
                     if (jsonResult.hasOwnProperty("ReturnCode")) {
                         var code = jsonResult.ReturnCode;
+                        console.log("     code=" + code)
+                        if (code == 1) {
+                            alert("   登录成功 " +JSON.stringify(jsonResult.userInfo))
 
-                        if (code == 0) {
-                            alert("   登录成功 ")
-                            window.location.href = '/html/success.html';
-                        } else if (code == 3){
-                            alert("当前用户已经登录");
-                            window.location.href = '/html/success.html';
+                            window.location.href = 'html/homePage.html';
+
+                            Setcookie("username", JSON.stringify(jsonResult.userInfo));
+
+
+                        } else if (code == 3) {
+
+
+                            alert("当前用户已经登录"+JSON.stringify(jsonResult.userInfo));
+
+                            window.location.href = 'html/homePage.html';
+                            Setcookie("username", JSON.stringify(jsonResult.userInfo));
                         } else {
                             alert("登录失败");
                         }
@@ -64,6 +75,16 @@
 
                 }
             });
+        }
+
+        function Setcookie(name, value) {
+
+            //设置名称为name,值为value的Cookie
+            var expdate = new Date();   //初始化时间
+            expdate.setTime(expdate.getTime() + 30 * 60 * 1000);   //时间
+            document.cookie = name + "=" + value + ";expires=" + expdate.toGMTString() + ";path=/";
+
+            //即document.cookie= name+"="+value+";path=/";   时间可以不要，但路径(path)必须要填写，因为JS的默认路径是当前页，如果不填，此cookie只在当前页面生效！~
         }
 
         function getJsonData() {
@@ -97,9 +118,9 @@
 
     <form id="form1" method="post">
         <p>
-            账号:<input id="username" type="text"/>
+            账号:<input id="username" type="text" autocomplete="current_username"/>
         <p>
-            密码:<input id="passwordId" type="password"/>
+            密码:<input id="passwordId" type="password" autocomplete="current-password"/>
         <p>
             <input type="submit" value="登录" onclick="login()"/>
 

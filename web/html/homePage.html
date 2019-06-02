@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <style>
+        .list_con {
+            width: 600px;
+            margin: 50px auto 0;
+        }
+
+
+    </style>
+    <script type="application/javascript" src="../js/jquery-3.1.1.min.js">
+    </script>
+    <script>
+        function startTime() {
+            var json = {
+                "time": "11111111",
+            };
+
+
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                contentType: 'application/json',
+                url: "../polling",//url
+                data: JSON.stringify(json),
+                success: function (result) {
+                    alert("result ")
+
+                }
+            });
+
+
+        }
+
+
+        function initUserInfo() {
+            var userInfo = getCookie("username");
+            var usernameValue = "欢迎，" + JSON.parse(userInfo).username;
+
+            $("#h1_useranme").text(usernameValue);
+
+            if (JSON.parse(userInfo).isAdmin == 1) {
+                $("#a_user_list").show();
+            } else {
+                $("#a_user_list").hide();
+            }
+
+        }
+
+        function getCookie(c_name) {
+            if (document.cookie.length > 0) {
+                c_start = document.cookie.indexOf(c_name + "=")
+                if (c_start != -1) {
+                    c_start = c_start + c_name.length + 1
+                    c_end = document.cookie.indexOf(";", c_start)
+                    if (c_end == -1) c_end = document.cookie.length
+                    return unescape(document.cookie.substring(c_start, c_end))
+                }
+            }
+            return ""
+        }
+
+
+        function getUserInfoList() {
+
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                contentType: 'application/json',
+                url: "../userList",//url
+                success: function (result) {
+                    var jsonResult = JSON.parse(result);
+                    alert(jsonResult)
+                    // jsonResult.each(function () {
+                    //     alert($(this).text())
+                    // })
+                }
+            });
+
+        }
+
+    </script>
+
+
+</head>
+<body onload="initUserInfo();">
+
+<h1 style="text-align: center" id="h1_useranme"></h1>
+
+<div>
+
+    <a id="a_user_list" href="" onclick="getUserInfoList()">用户列表</a>
+
+
+</div>
+
+<div class="list_con">
+    <h2>添加、删除、排序</h2>
+    <input type="text" name="" id="text1" class="inputtext">
+    <input type="button" name="" value="增加" id="btn1" class="inputbtn">
+
+    <ul id="list" class="list">
+        <li><span>你今天好不好</span><a href="#" class="up">↑</a><a href="#" class="down">↓</a><a href="#" class="del">删除</a>
+        </li>
+        <li>
+            <span>学习,学习,学习</span><a href="#" class="up">↑</a><a href="#" class="down">↓</a><a href="#"
+                                                                                              class="del">删除</a>
+        </li>
+        <li class="third"><span>走到她身边去</span><a href="#" class="up">↑</a><a href="#" class="down">↓</a><a href="#"
+                                                                                                          class="del">删除</a>
+        </li>
+
+    </ul>
+
+
+</div>
+
+</body>
+</html>
