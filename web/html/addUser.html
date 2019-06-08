@@ -60,6 +60,8 @@
                         if (code == 1) {
                             alert("   注册成功 ")
 
+                        } else if (code == 10002) {
+                            alert("用户已经存在");
                         } else {
                             alert("注册失败");
                         }
@@ -84,16 +86,13 @@
 
 <div>
 
-        <p>
-            用户名:<input id="username" type="text" autocomplete="current_username"/>
-        <p>
-            密码:<input id="passwordId" type="password" autocomplete="current-password"/>
+    <p>
+        用户名:<input id="username" type="text" autocomplete="current_username"/>
+    <p>
+        密码:<input id="passwordId" type="password" autocomplete="current-password"/>
 
-        <p>
-            <input type="submit" value="注册" onclick="addANewUser()"/>
-
-
-
+    <p>
+        <input type="submit" value="注册" onclick="addANewUser()"/>
 
 
 </div>

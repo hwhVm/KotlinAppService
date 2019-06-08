@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>来了老弟</title>
+    <title>登录</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
 
@@ -50,17 +50,16 @@
                         var code = jsonResult.ReturnCode;
                         console.log("     code=" + code)
                         if (code == 1) {
-                            alert("   登录成功 " +JSON.stringify(jsonResult.userInfo))
+                            // alert("   登录成功 " +JSON.stringify(jsonResult.userInfo))
 
                             window.location.href = 'html/homePage.html';
 
                             Setcookie("username", JSON.stringify(jsonResult.userInfo));
 
 
-                        } else if (code == 3) {
+                        } else if (code == 10001) {
 
-
-                            alert("当前用户已经登录"+JSON.stringify(jsonResult.userInfo));
+                            alert("当前用户已经登录" + JSON.stringify(jsonResult.userInfo));
 
                             window.location.href = 'html/homePage.html';
                             Setcookie("username", JSON.stringify(jsonResult.userInfo));
