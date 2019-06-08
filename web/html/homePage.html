@@ -44,7 +44,7 @@
                 //几个参数需要注意一下
                 type: "POST",//方法类型
                 contentType: 'application/json',
-                url: "../userList",//url
+                url: "../user/userList",//url
                 success: function (result) {
                     alert(result)
                     $(JSON.parse(result).userListInfoList).each(function (index, item) {

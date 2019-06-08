@@ -7,17 +7,17 @@ public class NetCode {
     /**
      * 成功
      */
-    public static int CODE_SUCCESS = 1;
+    public final static int CODE_SUCCESS = 1;
     /**
      * 失败
      */
-    public static int CODE_FAILED = 0;
+    public final static int CODE_FAILED = 0;
     /**
      * 用户已经登录
      */
-    public static int CODE_ALREADY_LOGINED = 10001;
+    public final static int CODE_ALREADY_LOGINED = 10001;
     /**
      * 用户已经存在
      */
-    public static int CODE_ALREADY_EXIST = 10002;
+    public final static int CODE_ALREADY_EXIST = 10002;
 }

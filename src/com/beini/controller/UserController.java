@@ -3,10 +3,7 @@ package com.beini.controller;
 
 import com.beini.bean.UserInfo;
 import com.beini.bean.UserListInfo;
-import com.beini.http.BaseResponseJson;
-import com.beini.http.NetCode;
-import com.beini.http.UserListResponse;
-import com.beini.http.UserResponse;
+import com.beini.http.*;
 
 import com.beini.service.UserService;
 import com.beini.util.BLog;
@@ -36,7 +33,7 @@ public class UserController extends BaseController {
      * @param response
      * @param out
      */
-    @RequestMapping(value = "login", method = {RequestMethod.POST})
+    @RequestMapping(value = RequestUrl.USER_LOGIN, method = {RequestMethod.POST})
     public void login(@RequestBody UserInfo userInfo, HttpServletResponse response, HttpServletRequest request, PrintWriter out) {
 
         BLog.d(" ------------->login" + userInfo.toString());
@@ -96,7 +93,7 @@ public class UserController extends BaseController {
      * @param response
      * @param out
      */
-    @RequestMapping(value = "register", method = {RequestMethod.POST})
+    @RequestMapping(value = RequestUrl.USER_REGISTER, method = {RequestMethod.POST})
     public void register(@RequestBody UserInfo userInfo, HttpServletResponse response, PrintWriter out) {
         BLog.d(" ------------->Register   " + userInfo.toString());
         BaseResponseJson baseResponseJson = new BaseResponseJson();
@@ -134,7 +131,7 @@ public class UserController extends BaseController {
 
     }
 
-    @RequestMapping(value = "userList", method = {RequestMethod.POST})
+    @RequestMapping(value = RequestUrl.USER_USERLIST, method = {RequestMethod.POST})
     public void userList(HttpServletResponse response, HttpServletRequest request, PrintWriter out) {
 
         BLog.d(" ------------->userList");

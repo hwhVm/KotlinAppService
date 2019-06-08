@@ -3,6 +3,7 @@ package com.beini.controller;
 import com.beini.bean.Article;
 import com.beini.http.BaseResponseJson;
 import com.beini.http.NetCode;
+import com.beini.http.RequestUrl;
 import com.beini.service.ArticleService;
 import com.beini.util.BLog;
 import com.google.gson.Gson;
@@ -23,7 +24,7 @@ public class ArticleController extends BaseController {
     @Autowired
     private ArticleService userService;
 
-    @RequestMapping("getArticleList")
+    @RequestMapping(RequestUrl.USER_GET_ARTICLE_LIST)
 //  @RequestBody GetArticleRequest getArticleRequest,
     public void getArticleList(HttpServletResponse response, PrintWriter out) {
 
