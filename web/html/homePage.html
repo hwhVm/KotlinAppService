@@ -4,37 +4,11 @@
     <meta charset="UTF-8">
     <title>首页</title>
     <style>
-        .list_con {
-            width: 600px;
-            margin: 50px auto 0;
-        }
-
 
     </style>
     <script type="application/javascript" src="../js/jquery-3.1.1.min.js">
     </script>
     <script>
-        function startTime() {
-            var json = {
-                "time": "11111111",
-            };
-
-
-            $.ajax({
-                //几个参数需要注意一下
-                type: "POST",//方法类型
-                contentType: 'application/json',
-                url: "../polling",//url
-                data: JSON.stringify(json),
-                success: function (result) {
-                    alert("result ")
-
-                }
-            });
-
-
-        }
-
 
         function initUserInfo() {
             var userInfo = getCookie("username");
@@ -81,6 +55,11 @@
 
         }
 
+        function addUser() {
+            window.location.href = 'addUser.html';
+        }
+
+
     </script>
 
 
@@ -92,7 +71,7 @@
 <div>
 
     <button id="a_user_list" href="" onclick="getUserInfoList()">用户列表</button>
-
+    <button id="btn_add_user" href="" onclick="addUser()">添加用户</button>
 
 </div>
 <h3>用户列表：</h3>

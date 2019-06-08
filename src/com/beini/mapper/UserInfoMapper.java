@@ -13,12 +13,15 @@ public interface UserInfoMapper {
     @Select("select * from UserInfo where username=#{userName} and password=#{password}")
     List<UserInfo> login(@Param("userName") String userName, @Param("password") String password);
 
-    @Insert("insert into userInfo(username,password) values(#{username},#{password});")
+    @Insert("insert into userInfo(username,password,isAdmin) values(#{username},#{password},#{isAdmin});")
     int register(UserInfo userInfo);
 
 
     @Select("select * from UserInfo")
     List<UserListInfo> getUserList();
 
+
+    @Select("select * from UserInfo where username=#{userName}")
+    List<UserListInfo> findUserById(@Param("userName") String userName);
 
 }

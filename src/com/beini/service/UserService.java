@@ -12,4 +12,6 @@ public interface UserService {
     int register(UserInfo userInfo);
 
     List<UserListInfo>  getUserList();
+
+    List<UserListInfo> findUserById(String userName);
 }

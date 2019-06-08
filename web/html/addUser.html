@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>添加用户</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+
+    <script type="application/javascript" src="../js/jquery-3.1.1.min.js">
+    </script>
+
+    <script type="text/javascript">
+
+
+        function getRegisterData() {
+
+            var username = $('#username').val();
+            var password = $('#passwordId').val();
+            if ($.trim(username) == '') {
+                alert("用户名不能为空");
+                return null;
+            }
+            if ($.trim(password) == '') {
+                alert("密码不能为空");
+                return null;
+            }
+
+
+            var json = {
+                "username": username,
+                "password": password,
+            };
+            return json;
+        }
+
+
+        function addANewUser() {
+
+            var parmValue = getRegisterData();
+
+            console.log("   parmValue=" + parmValue)
+            if (parmValue == null || "" == parmValue) {
+                return
+            }
+
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                contentType: 'application/json',
+                url: "../register",//url
+                data: JSON.stringify(parmValue),
+                success: function (result) {
+
+                    var jsonResult = JSON.parse(result);
+                    console.log("     success  ")
+
+                    if (jsonResult.hasOwnProperty("ReturnCode")) {
+                        var code = jsonResult.ReturnCode;
+                        console.log("     code=" + code)
+                        if (code == 1) {
+                            alert("   注册成功 ")
+
+                        } else {
+                            alert("注册失败");
+                        }
+
+                    } else {
+                        alert("  nothing")
+                    }
+
+
+                }
+            });
+        }
+
+    </script>
+
+
+</head>
+<body>
+
+
+</body>
+
+<div>
+
+        <p>
+            用户名:<input id="username" type="text" autocomplete="current_username"/>
+        <p>
+            密码:<input id="passwordId" type="password" autocomplete="current-password"/>
+
+        <p>
+            <input type="submit" value="注册" onclick="addANewUser()"/>
+
+
+
+
+
+</div>
+
+
+</html>

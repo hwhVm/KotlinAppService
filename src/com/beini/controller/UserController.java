@@ -66,7 +66,7 @@ public class UserController extends BaseController {
 
         if (userinfo != null && userinfo.getUsername().equals(userName)) {//用户已经登录
             BLog.d("  用户已经登录 ");
-            responseJson.setReturnCode(3);
+            responseJson.setReturnCode(300);
             responseJson.setUserInfo(userinfo);
             setResponse(responseJson, response, out);
             return;
@@ -98,11 +98,36 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "register", method = {RequestMethod.POST})
     public void register(@RequestBody UserInfo userInfo, HttpServletResponse response, PrintWriter out) {
-        BLog.d(" ------------->Register" + userInfo.toString());
+        BLog.d(" ------------->Register   " + userInfo.toString());
+        BaseResponseJson baseResponseJson = new BaseResponseJson();
+
+        //判断用户名和密码是否为空
+        boolean isUserError = userInfo.getUsername() == null || userInfo.getUsername().isEmpty();
+        boolean isPasswordError = userInfo.getPassword() == null || userInfo.getPassword().isEmpty();
+
+        if (isUserError || isPasswordError) {//密码或者用户名为空
+            baseResponseJson.setReturnCode(0);
+            setResponse(baseResponseJson, response, out);
+            return;
+
+        }
+        //TODO 判断用户的session
+
+
+        //判断用户是否已经存在
+        List<UserListInfo> userListInfoList = userService.findUserById(userInfo.getUsername());
+        if (userListInfoList.size() > 0) {//用户已经存在
+            baseResponseJson.setReturnCode(3);
+            setResponse(baseResponseJson, response, out);
+            return;
+
+        }
+
+        userInfo.setAdmin(0);
 
         int numRow = userService.register(userInfo);
         BLog.d("numRow=" + numRow);
-        BaseResponseJson baseResponseJson = new BaseResponseJson();
+
         baseResponseJson.setReturnCode(1);
         setResponse(baseResponseJson, response, out);
 
