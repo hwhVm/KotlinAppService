@@ -20,4 +20,10 @@ public class NetCode {
      * 用户已经存在
      */
     public final static int CODE_ALREADY_EXIST = 10002;
+    /**
+     * session过期 Invalid
+     */
+
+    public final static int CODE_SESSION_INVALID = 10003;
+
 }

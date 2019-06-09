@@ -1,9 +1,7 @@
 package com.beini.service.impl;
 
-import com.beini.bean.Article;
 import com.beini.bean.UserInfo;
 import com.beini.bean.UserListInfo;
-import com.beini.mapper.ArticleMapper;
 import com.beini.mapper.UserInfoMapper;
 import com.beini.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +35,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserListInfo> findUserById(String userName) {
         return userInfoMapper.findUserById(userName);
+    }
+
+    @Override
+    public int deteleUser(String userName) {
+
+
+        return userInfoMapper.deteleUser(userName);
     }
 
 

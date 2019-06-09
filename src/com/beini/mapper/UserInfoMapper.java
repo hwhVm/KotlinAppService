@@ -24,4 +24,8 @@ public interface UserInfoMapper {
     @Select("select * from UserInfo where username=#{userName}")
     List<UserListInfo> findUserById(@Param("userName") String userName);
 
+    @Insert("delete from UserInfo where username = #{userName}")
+    int deteleUser(String userName);
+
+
 }

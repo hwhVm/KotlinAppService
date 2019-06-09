@@ -17,6 +17,8 @@ public class RequestUrl {
     public static final String USER_USERLIST = "user/userList";
 
 
+    public static final String USER_DETELE = "user/detele";
+
     /**
      * 文章
      */

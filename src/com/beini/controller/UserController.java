@@ -75,7 +75,11 @@ public class UserController extends BaseController {
 
         if (userInfoList != null && userInfoList.size() > 0) {
             responseJson.setUserInfo(userInfoList.get(0));
+            //24小时
+            session.setMaxInactiveInterval(60 * 60 * 24);
             session.setAttribute("userinfo", userInfoList.get(0));
+
+
             responseJson.setReturnCode(NetCode.CODE_SUCCESS);
 
         } else {
@@ -131,6 +135,13 @@ public class UserController extends BaseController {
 
     }
 
+    /**
+     * 用户列表
+     *
+     * @param response
+     * @param request
+     * @param out
+     */
     @RequestMapping(value = RequestUrl.USER_USERLIST, method = {RequestMethod.POST})
     public void userList(HttpServletResponse response, HttpServletRequest request, PrintWriter out) {
 
@@ -143,16 +154,52 @@ public class UserController extends BaseController {
         UserInfo userinfo = (UserInfo) session.getAttribute("userinfo");
 
         if (userinfo == null) {
-            baseResponseJson.setReturnCode(NetCode.CODE_FAILED);
+            baseResponseJson.setReturnCode(NetCode.CODE_SESSION_INVALID);
             setResponse(baseResponseJson, response, out);
             return;
         }
         List<UserListInfo> userListInfoList = userService.getUserList();
 
-        //判断是否是管理员
+        //todo 判断是否是管理员
         baseResponseJson.setUserListInfoList(userListInfoList);
         baseResponseJson.setReturnCode(NetCode.CODE_SUCCESS);
         setResponse(baseResponseJson, response, out);
+
+    }
+
+
+    /**
+     * 用户注册
+     *
+     * @param userInfo
+     * @param response
+     * @param out
+     */
+    @RequestMapping(value = RequestUrl.USER_DETELE, method = {RequestMethod.POST})
+    public void deteleUser(@RequestBody UserInfo userInfo, HttpServletResponse response, PrintWriter out) {
+        BLog.d(" ------------->deteleUser" + userInfo.toString());
+        //todo 判断当前用户是否是管理员
+
+        BaseResponseJson baseResponseJson = new BaseResponseJson();
+
+
+        //判断用户名是否为空
+        String userName = userInfo.getUsername();
+        if (userName == null || userName.isEmpty()) {
+            baseResponseJson.setReturnCode(NetCode.CODE_FAILED);
+            setResponse(baseResponseJson, response, out);
+            return;
+        }
+
+        int result = userService.deteleUser(userName);
+
+        if (result == 1) {
+            baseResponseJson.setReturnCode(NetCode.CODE_SUCCESS);
+            setResponse(baseResponseJson, response, out);
+        } else {
+            baseResponseJson.setReturnCode(NetCode.CODE_FAILED);
+            setResponse(baseResponseJson, response, out);
+        }
 
     }
 }

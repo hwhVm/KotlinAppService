@@ -37,7 +37,6 @@
             return ""
         }
 
-
         function getUserInfoList() {
 
             $.ajax({
@@ -46,9 +45,13 @@
                 contentType: 'application/json',
                 url: "../user/userList",//url
                 success: function (result) {
+                    $("ol li").remove();
                     alert(result)
                     $(JSON.parse(result).userListInfoList).each(function (index, item) {
-                        $('ol').append('<li>'+item.username+'</li>');
+                        var itemValue = item.username;
+
+                        $('ol').append('<li>' + itemValue + '<button  onclick="deteUser(\'' + itemValue + '\')">' + '删除' + '</button>' + ' </li>')
+
                     })
                 }
             });
@@ -59,6 +62,42 @@
             window.location.href = 'addUser.html';
         }
 
+        function deteUser(valTemp) {
+            alert("valTemp =" + valTemp)
+
+            var jsonData = "{'username':" + valTemp + "}"
+
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                contentType: 'application/json',
+                url: "../user/detele",//url
+                data: jsonData,
+                success: function (result) {
+
+                    var jsonResult = JSON.parse(result);
+                    console.log("     success  ")
+
+                    if (jsonResult.hasOwnProperty("ReturnCode")) {
+                        var code = jsonResult.ReturnCode;
+                        console.log("     code=" + code)
+                        if (code == 1) {
+                            //刷新列表
+                            getUserInfoList();
+
+                        } else {
+                            alert("删除失败");
+                        }
+
+
+                    } else {
+                        alert("  nothing")
+                    }
+
+
+                }
+            });
+        }
 
     </script>
 
