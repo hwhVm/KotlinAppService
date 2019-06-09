@@ -118,6 +118,7 @@ public class UserController extends BaseController {
 
         //判断用户是否已经存在
         List<UserListInfo> userListInfoList = userService.findUserById(userInfo.getUsername());
+
         if (userListInfoList.size() > 0) {//用户已经存在
             baseResponseJson.setReturnCode(NetCode.CODE_ALREADY_EXIST);
             setResponse(baseResponseJson, response, out);

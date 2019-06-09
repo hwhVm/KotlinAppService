@@ -30,7 +30,7 @@
 
             var parmValue = getJsonData();
 
-            console.log("   parmValue=" + parmValue)
+            console.log("   parmValue=" + JSON.stringify(parmValue))
             if (parmValue == null || "" == parmValue) {
                 return
             }
@@ -39,6 +39,7 @@
                 //几个参数需要注意一下
                 type: "POST",//方法类型
                 contentType: 'application/json',
+                async: false,
                 url: "user/login",//url
                 data: JSON.stringify(parmValue),
                 success: function (result) {
@@ -49,20 +50,13 @@
                     if (jsonResult.hasOwnProperty("ReturnCode")) {
                         var code = jsonResult.ReturnCode;
                         console.log("     code=" + code)
-                        if (code == 1) {
-                            // alert("   登录成功 " +JSON.stringify(jsonResult.userInfo))
-
+                        if (code == "1") {
+                            Setcookie("username", JSON.stringify(jsonResult.userInfo));
+                            window.location.href = 'html/homePage.html';
+                        } else if (code == "10001") {
+                            Setcookie("username", JSON.stringify(jsonResult.userInfo));
                             window.location.href = 'html/homePage.html';
 
-                            Setcookie("username", JSON.stringify(jsonResult.userInfo));
-
-
-                        } else if (code == 10001) {
-
-                            alert("当前用户已经登录" + JSON.stringify(jsonResult.userInfo));
-
-                            window.location.href = 'html/homePage.html';
-                            Setcookie("username", JSON.stringify(jsonResult.userInfo));
                         } else {
                             alert("登录失败");
                         }
@@ -115,7 +109,7 @@
 
 <div class="divForm">
 
-    <form id="form1" method="post">
+
         <p>
             账号:<input id="username" type="text" autocomplete="current_username"/>
         <p>
@@ -123,8 +117,6 @@
         <p>
             <input type="submit" value="登录" onclick="login()"/>
 
-
-    </form>
 
 </div>
 
